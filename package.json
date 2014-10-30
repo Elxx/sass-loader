@@ -20,7 +20,7 @@
   "dependencies": {
     "loader-utils": "~0.2.2",
     "node-sass": "~1.0.3",
-    "sass-graph": "^0.1.2"
+    "sass-graph": "https://github.com/Elxx/sass-graph/archive/64dbd2e59fc70f12adbb79f3ee66f5d2190cc444.zip"
   },
   "devDependencies": {
     "css-loader": "^0.9.0",
