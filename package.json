@@ -20,7 +20,7 @@
   "dependencies": {
     "loader-utils": "~0.2.2",
     "node-sass": "~1.0.3",
-    "sass-graph": "https://github.com/Elxx/sass-graph/tarball/64dbd2e59fc70f12adbb79f3ee66f5d2190cc444"
+    "sass-graph": "https://github.com/Elxx/sass-graph/tarball/9fbcaab751beed23b97997e4ea5041f518d03af3"
   },
   "devDependencies": {
     "css-loader": "^0.9.0",
