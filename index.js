@@ -1,9 +1,7 @@
-var util = require('util');
 var utils = require('loader-utils');
 var sass = require('node-sass');
 var path = require('path');
 var sassGraph = require('sass-graph');
-
 
 module.exports = function (content) {
     this.cacheable();
@@ -13,7 +11,7 @@ module.exports = function (content) {
     opt.data = content;
 
     // skip empty files, otherwise it will stop webpack, see issue #21
-    if(opt.data.trim() == '') {
+    if (opt.data.trim() === '') {
         return callback(null, content);
     }
 
@@ -28,18 +26,26 @@ module.exports = function (content) {
     // output compressed by default
     opt.outputStyle = opt.outputStyle || 'compressed';
     opt.stats = {};
-
-    // mark dependencies
-    var graph = sassGraph.parseFile(this.resourcePath, {loadPaths: opt.includePaths});
-    graph.visitDescendents(this.resourcePath, function (imp) {
-        this.addDependency(imp);
-    }.bind(this));
+    
+    var loadPaths = opt.includePaths;
+    var markDependencies = function () {
+        try {
+            var graph = sassGraph.parseFile(this.resourcePath, {loadPaths: loadPaths});
+            graph.visitDescendents(this.resourcePath, function (imp) {
+                this.addDependency(imp);
+            }.bind(this));
+        } catch (err) {
+            this.emitError(err);
+        } 
+    }.bind(this);
 
     opt.success = function (css) {
+        markDependencies();
         callback(null, css);
     }.bind(this);
 
     opt.error = function (err) {
+        markDependencies();
         this.emitError(err);
         callback(err);
     }.bind(this);
